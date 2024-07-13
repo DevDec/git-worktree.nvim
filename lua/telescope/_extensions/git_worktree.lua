@@ -83,7 +83,7 @@ local delete_worktree = function(prompt_bufnr)
     end
 end
 
-local create_input_prompt = function(cb, message)
+local create_input_prompt = function(cb)
 
     --[[
     local window = Window.centered({
@@ -122,11 +122,11 @@ local create_worktree = function(opts)
                 local branch = selected_entry ~= nil and
                     selected_entry.value or current_line
 
-                    create_input_prompt(function(name)
-                        if branch == nil then
-                            return
-                        end
+                if branch == nil then
+                    return
+                end
 
+                create_input_prompt(function(name)
                     if name == "" then
                         name = branch
                     end
@@ -135,21 +135,14 @@ local create_worktree = function(opts)
                         if upstream == "" then
                             upstream = nil
                         end
-                    end, 'Uptream')
+                    end)
 
-                    create_input_prompt(function(upstream_branch)
-                        if upstream_branch == "" then
-                            upstream_branch = nil
-                        end
-                    end, 'Upstream branch >')
-
-
-                    if upstream == nil or upstream_branch == nil then
+                    if upstream == nil then
                         git_worktree.create_worktree(name, branch)
                     else
-                        git_worktree.create_worktree(name, branch, upstream, upstream_branch)
+                        git_worktree.create_worktree(name, branch, upstream)
                     end
-                end, 'Path to subtree >')
+                end)
             end)
 
         -- do we need to replace other default maps?
