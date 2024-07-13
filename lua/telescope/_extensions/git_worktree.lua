@@ -130,7 +130,18 @@ local create_worktree = function(opts)
                     if name == "" then
                         name = branch
                     end
-                    git_worktree.create_worktree(name, branch)
+
+                    create_input_prompt(function(upstream)
+                        if upstream == "" then
+                            upstream = nil
+                        end
+                    end)
+
+                    if upstream == nil then
+                        git_worktree.create_worktree(name, branch)
+                    else
+                        git_worktree.create_worktree(name, branch, upstream)
+                    end
                 end)
             end)
 
