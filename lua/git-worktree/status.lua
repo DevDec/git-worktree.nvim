@@ -41,7 +41,6 @@ end
 function Status:next_status(msg)
     self.idx = self.idx + 1
     local fmt_msg = self:_get_string(msg)
-    print(fmt_msg)
     self.logger.info(fmt_msg)
 end
 
@@ -54,7 +53,6 @@ end
 
 function Status:status(msg)
     local fmt_msg = self:_get_string(msg)
-    print(fmt_msg)
     self.logger.info(fmt_msg)
 end
 
